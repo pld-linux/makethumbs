@@ -1,7 +1,7 @@
 #
 %define	_rev	1.272
 
-Summary:	makethumbs
+Summary:	From digicam to web page in under thirty seconds
 Name:		makethumbs
 Version:	%{_rev}
 Release:	1
@@ -13,7 +13,7 @@ Source1:	http://www.molenda.com/makethumbs/rotate.sh
 # Source1-md5:	cd5d7319ca28b142cba99bb67a26a4e0
 Source2:	%{name}-pl.conf
 URL:		http://www.molenda.com/makethumbs/
-Requires:	ImageMagick
+Requires:	ImageMagick-coder-jpeg
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
