@@ -51,6 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE0} $RPM_BUILD_ROOT%{_bindir}/makethumbs.sh
 install %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/rotate.sh
+sed -i -e s/'DEFAULT_preferred_image_tools="sips" # or "netpbm" or "imagemagick"'/'DEFAULT_preferred_image_tools="imagemagick" # or "netpbm" or "sips"'/g $RPM_BUILD_ROOT%{_bindir}/makethumbs.sh
 cp %{SOURCE2}	.
 
 %clean
