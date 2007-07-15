@@ -1,9 +1,7 @@
-#
-%define	_rev	1.272
-
 Summary:	From digicam to web page in under thirty seconds
+Summary(pl.UTF-8):	Od aparatu cyfrowego do strony WWW poniżej 30 sekund
 Name:		makethumbs
-Version:	%{_rev}
+Version:	1.272
 Release:	1
 License:	GPL
 Group:		Applications
@@ -13,6 +11,8 @@ Source1:	http://www.molenda.com/makethumbs/rotate.sh
 # Source1-md5:	cd5d7319ca28b142cba99bb67a26a4e0
 Source2:	%{name}-pl.conf
 URL:		http://www.molenda.com/makethumbs/
+BuildRequires:	sed >= 4.0
+Requires:	ImageMagick
 Requires:	ImageMagick-coder-jpeg
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -27,24 +27,30 @@ will give you usable web pages with zero extra work. If you have more
 than five seconds to spend on your pictures, makethumbs allows for
 lots of customization, labeling, and image descriptions.
 
-The goals of makethumbs are
+The goals of makethumbs are:
+- exist in a single script that can be mailed around easily
+- generate clean, simple, portable HTML
+- don't lock the images into any kind of database
+- portable, portable, portable
 
-    - exist in a single script that can be mailed around easily
-    - generate clean, simple, portable HTML
-    - don't lock the images into any kind of database
-    - portable, portable, portable
+%description -l pl.UTF-8
+makethumbs.sh i rotate.sh to skrypty do tworzenia wygładzonych,
+statycznych galerii obrazów, nadających się na stronę WWW czy CD-ROM,
+z dużej liczby JPEG-ów w katalogu. makethumbs jest używany zwykle w
+połączeniu z aparatem cyfrowym. Kiedy chcemy udostępnić innym duży
+zestaw zdjęć, makethumbs tworzy używalne strony WWW bez dodatkowej
+pracy. Jeśli mamy więcej niż 5 sekund, makethumbs pozwala w istotny
+sposób dostosować galerię, dodać etykiety i opisy obrazów.
 
-There are many other image gallery programs. Within the category of
-programs that don't import all your images into a database or depend
-on dynamic PHP/CGI scripting, I believe makethumbs.sh is one of the
-best around. Many of these programs break some of my stated
-goals--they generate fancy HTML that acts oddly/requires certain
-browsers, or they make big databases to track and display your images
-eighteen ways from Sunday, or they touch your original images, or they
-only run on Winblows, or they require all sorts of ancillary software
-to work correctly.
+makethumbs ma za zadanie:
+- istnieć w pojedynczym skrypcie, który można wysłać e-mailem
+- generować czysty, prosty, przenośny HTML
+- nie zamykać obrazów w żadnej bazie danych
+- być przenośnym, przenośnym i jeszcze raz przenośnym
 
 %prep
+%setup -q -c -T
+cp %{SOURCE2} .
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -52,7 +58,6 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 install %{SOURCE0} $RPM_BUILD_ROOT%{_bindir}/makethumbs.sh
 install %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/rotate.sh
 sed -i -e s/'DEFAULT_preferred_image_tools="sips" # or "netpbm" or "imagemagick"'/'DEFAULT_preferred_image_tools="imagemagick" # or "netpbm" or "sips"'/g $RPM_BUILD_ROOT%{_bindir}/makethumbs.sh
-cp %{SOURCE2}	.
 
 %clean
 rm -rf $RPM_BUILD_ROOT
